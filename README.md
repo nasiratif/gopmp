@@ -1,6 +1,6 @@
 # gopmp (UEFI GOP Video Miniport)
 
-This is an experimental miniport driver for Windows 7 (can work on Vista too) that allows it to display video output using framebuffers exposed for the UEFI Graphics Output Protocol (GOP). It's supposed to replace the *vga.sys* file Windows uses for VGA output.
+This is an experimental miniport driver for Windows 7 (can work on Vista too) x64 that allows it to display video output using framebuffers exposed for the UEFI Graphics Output Protocol (GOP). It's supposed to replace the *vga.sys* file Windows uses for VGA output.
 
 Although Windows 7 has support for UEFI boot, it does not make use of GOP for it's standard video drivers, which means that if you attempt to boot Windows 7 on, say a modern device that is either UEFI Class 3 and/or doesn't have a legacy VBIOS, chances are likely you'd just get stuck on the *Starting Windows* screen, due to it insisting on using VGA/VBE which is increasingly being dropped on modern systems.
 
