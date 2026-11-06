@@ -93,7 +93,7 @@ GopFindAdapter(
 				// Enumerate through 3 of the PCI BARs to locate a suitable physical address that might correspond to the GOP framebuffer:
 				while (GopPciGetDeviceBars(&PciHeader, &CurrentBar, &BaseAddress, &IsIo))
 				{
-					if (IsIo)
+					if (IsIo) // we want a memory-mapped framebuffer, which I don't think would ever be in I/O space
 						continue;
 
 					// Check if this memory (all of it) is actually mappable.
