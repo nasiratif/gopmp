@@ -146,7 +146,7 @@ GopInitialize(
 }
 
 BOOLEAN
-GopStartIo(
+GopStartIO(
 	PGOP_DATA HwDeviceExtension,
 	PVIDEO_REQUEST_PACKET RequestPacket)
 {
@@ -333,7 +333,7 @@ DriverEntry(
 	HwData.HwDeviceExtensionSize = sizeof(GOP_DATA);
 	HwData.HwFindAdapter = GopFindAdapter;
 	HwData.HwInitialize = GopInitialize;
-	HwData.HwStartIO = GopStartIo;
+	HwData.HwStartIO = GopStartIO;
 	HwData.HwResetHw = GopResetHw;
 	return VideoPortInitialize(Context1, Context2, &HwData, NULL);
 
