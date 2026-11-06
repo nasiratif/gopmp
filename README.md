@@ -20,6 +20,8 @@ Probably won't work if you have multiple GPUs/monitors (it might pick the wrong 
 
 I label this driver as 'experimental' for a reason. I'm not aware of any standardized way to find the physical address of the current GOP framebuffer outside of boot services, as no GOP interfaces are available for a Windows driver (drivers have no access to UEFI boot services, of course). What this basically means is that this driver just plays a guessing game on where the framebuffer may possibly be, there's no guarantees this will work for you. It seems to be reliable from my testing across a few configurations, though.
 
+Also, this driver does not handle BSODs (that also insists on `int 10h`, so you won't see it unfortunately).
+
 ## Usage
 
 ### If you already have Windows 7 installed
