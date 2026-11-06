@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="GopMp.vcxproj" Id="71daaeeb-e9b5-b222-72d5-a4fd046a80ca">
+    <Deploy />
+  </Project>
+</Solution>

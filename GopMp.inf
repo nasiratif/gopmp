@@ -1,0 +1,29 @@
+;
+; gopmp.inf
+; This INF isn't really used..
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=DISPLAY
+ClassGuid={4d36e97d-e325-11ce-bfc1-08002be10318}
+Provider=%ManufacturerName%
+DriverVer=
+CatalogFile=gopmp.cat
+PnpLockdown=1
+
+[DestinationDirs]
+DefaultDestDir = 13
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+gopmp.sys=1
+
+[Manufacturer]
+%ManufacturerName%=ManufacturerName
+
+[Strings]
+ManufacturerName="Nassic :)"
+DiskName="UEFI GOP Miniport Source Disk"
