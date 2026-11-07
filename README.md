@@ -25,7 +25,13 @@ Also, this driver does not handle BSODs (that also insists on `int 10h`, so you 
 ## Usage
 
 ### If you already have Windows 7 installed
-Replace your *vga.sys* file with this driver. It is located in *Windows\System32\drivers*. As noted above you will need to have driver signature enforcement disabled as this driver is not signed.
+Replace your *vga.sys* file, as well as *vgapnp.sys*, with this driver. They are located in *Windows\System32\drivers*. As noted above you will need to have driver signature enforcement disabled as this driver is not signed.
+
+You can disable driver signature enforcement either by pressing F8 before Windows boots & selecting the *Disable Driver Signature Enforcement* option, or use this command when you have booted into Windows to apply it permanently:
+
+```bat
+bcdedit /set testsigning on
+```
 
 ### If you don't yet have Windows 7 installed
 Mount your `boot.wim` file using this command:
@@ -49,7 +55,7 @@ dism /Unmount-image /MountDir:path\to\your\already\existing\mountdir /discard
 
 You should be able to boot into the Windows installer and see video output now. 
 
-Note that once you've installed Windows you will have to replace *vga.sys* again in the drive you installed Windows in.
+Note that once you've installed Windows you will have to replace *vga.sys* again in the drive you installed Windows in, as well as *vgapnp.sys* if that's there.
 
 As I briefly mentioned above this driver is also compatible with Windows Vista. Unfortunately there you won't see the startup screen, though, that presumably is still trying to use legacy VGA, however after the OS loads the driver does kick in.
 
