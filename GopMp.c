@@ -337,7 +337,7 @@ DriverEntry(
 	HwData.HwResetHw = GopResetHw;
 	return VideoPortInitialize(Context1, Context2, &HwData, NULL);
 
-	// there is also new functions like HwSet/GetPowerState, and HwGetChildVideoDescriptor,
+	// there is also new functions like HwSet/GetPowerState, and HwGetVideoChildDescriptor,
 	// which apparently are required according to Microsoft docs but they don't actually
 	// seem to be, and not that we can do what they request anyways
 }
