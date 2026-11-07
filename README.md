@@ -38,13 +38,13 @@ dism /Mount-image /imagefile:path\to\boot.wim /Index:<edition_index> /MountDir:p
 Then, in the mount directory, replace your *vga.sys* file with this driver. Afterwards commit the changes:
 
 ```bat
-dism /Commit-Image /MountDir:path\to\your\already\existing\mountdir
+dism /Commit-image /MountDir:path\to\your\already\existing\mountdir
 ```
 
 Then unmount the image if you want:
 
 ```bat
-dism /Unmount-Image /MountDir:path\to\your\already\existing\mountdir /discard
+dism /Unmount-image /MountDir:path\to\your\already\existing\mountdir /discard
 ```
 
 You should be able to boot into the Windows installer and see video output now. 
