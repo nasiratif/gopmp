@@ -18,15 +18,15 @@
 // DEFINES:
 // -----
 // PCIe allows more but I'm not really expecting that much on any system
-#define PCI_MAX_BUS 256
+#define GOP_PCI_MAX_BUS 256
 // Number of bars that a GPU would typically have
-#define PCI_NUM_BARS 3
-#define PCI_BAR_MEMTYPE_MEMORY 0
-#define PCI_BAR_MEMTYPE_IO 1
-#define PCI_BAR_BITS_32 0x0
-#define PCI_BAR_BITS_64 0x2
-#define PCI_BAR_IS_IO(baseAddr) ((baseAddr) & 0b1)
-#define PCI_GET_BAR_TYPE(baseAddr) ((baseAddr >> 1) & 0b11)
+#define GOP_PCI_NUM_BARS 3
+#define GOP_PCI_BAR_MEMTYPE_MEMORY 0
+#define GOP_PCI_BAR_MEMTYPE_IO 1
+#define GOP_PCI_BAR_BITS_32 0x0
+#define GOP_PCI_BAR_BITS_64 0x2
+#define GOP_PCI_BAR_IS_IO(baseAddr) ((baseAddr) & 0b1)
+#define GOP_PCI_GET_BAR_TYPE(baseAddr) ((baseAddr >> 1) & 0b11)
 // -----
 
 // Writes a device's PCI_COMMON_CONFIG at the specified bus & slot number (which is a PCI_SLOT_NUMBER as a ULONG)

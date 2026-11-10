@@ -72,7 +72,7 @@ GopFindAdapter(
 	// work on my class 3 UEFI laptop, as well as VMWare & QEMU).
 	// Can't just make use of the bus number provided in ConfigInfo because the device we want might not
 	// be there:
-	for (Bus = 0; Bus < PCI_MAX_BUS; ++Bus)
+	for (Bus = 0; Bus < GOP_PCI_MAX_BUS; ++Bus)
 	{
 		for (Device = 0; Device < PCI_MAX_DEVICES; ++Device)
 		{

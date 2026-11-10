@@ -29,28 +29,28 @@ GopPciGetDeviceBars(
 	PPHYSICAL_ADDRESS BaseAddress,
 	PBOOLEAN IsIo)
 {
-	if ((*CurrentBar) >= PCI_NUM_BARS)
+	if ((*CurrentBar) >= GOP_PCI_NUM_BARS)
 		return FALSE;
 
 	struct _PCI_HEADER_TYPE_0* Type0 = &Header->u.type0;
 
-	*IsIo = PCI_BAR_IS_IO(Type0->BaseAddresses[*CurrentBar]);
+	*IsIo = GOP_PCI_BAR_IS_IO(Type0->BaseAddresses[*CurrentBar]);
 	if (*IsIo)
 	{
 		BaseAddress->QuadPart = Type0->BaseAddresses[(*CurrentBar)++] & 0xFFFFFFFC;
 	}
 	else
 	{
-		switch (PCI_GET_BAR_TYPE(Type0->BaseAddresses[*CurrentBar]))
+		switch (GOP_PCI_GET_BAR_TYPE(Type0->BaseAddresses[*CurrentBar]))
 		{
-		case PCI_BAR_BITS_32:
+		case GOP_PCI_BAR_BITS_32:
 		{
 			BaseAddress->QuadPart = Type0->BaseAddresses[(*CurrentBar)++] & 0xFFFFFFF0;
 			break;
 		}
-		case PCI_BAR_BITS_64:
+		case GOP_PCI_BAR_BITS_64:
 		{
-			if (*CurrentBar + 1 >= PCI_NUM_BARS)
+			if (*CurrentBar + 1 >= GOP_PCI_NUM_BARS)
 				return FALSE; // somehow
 
 			BaseAddress->QuadPart = ((ULONGLONG)Type0->BaseAddresses[*CurrentBar] & 0xFFFFFFF0) + (((ULONGLONG)Type0->BaseAddresses[(*CurrentBar) + 1] & 0xFFFFFFFF) << 32);
