@@ -63,6 +63,8 @@ GopFindAdapter(
 	ULONG MapFlags, MapLength;
 	PVOID MapAddress;
 
+	BOOLEAN FrameBufferBlack;
+
 	// Do a brute-force loop across all PCI buses,
 	// if a display controller is found then get it's BARs to guess where the framebuffer *might* be located.
 	// AFAIK since we don't have access to GOP interfaces this is the only way we could figure out where
@@ -105,9 +107,31 @@ GopFindAdapter(
 					if (VideoPortMapMemory(HwDeviceExtension, BaseAddress, &MapLength, &MapFlags, &MapAddress) != NO_ERROR)
 						continue;
 
-					VideoPortUnmapMemory(HwDeviceExtension, MapAddress, NULL);
 					if (MapLength < GOP_MODE_FRAMEBUFFERSIZE)
+					{
+						VideoPortUnmapMemory(HwDeviceExtension, MapAddress, NULL);
 						continue; // it's not big enough
+					}
+					
+					// To be even more sure that this is the framebuffer, read the memory region to check if the top rows are 
+					// all black (because the Starting Windows/Windows is loading files screen is mostly black):
+					FrameBufferBlack = TRUE;
+					for (UINT32 y = 0; y < 128; ++y)
+					{
+						for (UINT32 x = 0; x < GOP_MODE_WIDTH; ++x)
+						{
+							if ((((UINT32*)MapAddress)[x + y * GOP_MODE_WIDTH] & 0xFFFFFF) != 0x000000)
+							{
+								FrameBufferBlack = FALSE;
+								break;
+							}
+						}
+					}
+					if (!FrameBufferBlack)
+					{
+						VideoPortUnmapMemory(HwDeviceExtension, MapAddress, NULL);
+						continue;
+					}
 					// -----
 					
 					// Attempt to claim the access range for the framebuffer.
