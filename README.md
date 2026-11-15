@@ -66,5 +66,6 @@ Contributions are appreciated, especially if you figure out a better & more reli
 
 ## Credits
 
+- The community at [My Digital Life](https://forums.mydigitallife.net/threads/windows-7-uefi-gop-driver.90687/) for help testing this on various hardware
 - The [ReactOS](https://github.com/reactos/reactos) project for showing me how a video miniport is made
 - [OSDev.org](https://wiki.osdev.org/PCI) for teaching me how PCI works
