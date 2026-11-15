@@ -9,7 +9,7 @@
 #include "GopMp.h"
 #include "GopPci.h"
 
-const UINT32 GOP_BOOTMGR_COLORS[3] =
+const UINT32 GOP_BOOTMGR_COLORS[GOP_BOOTMGR_COLOR_COUNT] =
 {
 	0x000000,
 	0xBFBFBF,
