@@ -1,6 +1,6 @@
 /*
 
-	UEFI GOP Miniport Driver v1.0.1
+	UEFI GOP Miniport Driver v1.0.2
 	Written by Nasir "Nassic" W. (@nasiratif on GitHub)
 	(C) 2026
 
@@ -49,6 +49,11 @@
 #define GOP_MODE_STRIDE (GOP_MODE_WIDTH * 4)
 // Minimum size of the framebuffer
 #define GOP_MODE_FRAMEBUFFERSIZE (GOP_MODE_WIDTH * GOP_MODE_HEIGHT * 4)
+// The first few rows of the found memory region should be checked to verfiy the 
+// possibility of it being the framebuffer.
+// Doing 128 just because better to be safe than sorry :)
+#define GOP_NUM_ROWS_TO_VERIFY 128
+#define GOP_BOOTMGR_COLOR_COUNT 3
 // -----
 
 // Device extension for this miniport
@@ -56,5 +61,9 @@ typedef struct
 {
 	PHYSICAL_ADDRESS FrameBufferBase;
 } GOP_DATA, * PGOP_DATA;
+
+// Color palette that the Windows Boot Manager uses.
+// This is used during framebuffer data validation to ensure the framebuffer was really found
+extern const UINT32 GOP_BOOTMGR_COLORS[GOP_BOOTMGR_COLOR_COUNT];
 
 #endif

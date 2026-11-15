@@ -9,6 +9,13 @@
 #include "GopMp.h"
 #include "GopPci.h"
 
+const UINT32 GOP_BOOTMGR_COLORS[3] =
+{
+	0x000000,
+	0xBFBFBF,
+	0xFFFFFF
+};
+
 // Due to GOP limitations this is the only mode we can expose; it's first of all
 // not accessible after the boot service stage (the framebuffer is all that remains),
 // and this is a driver anyways so not that we'd have the pointer to boot services in the first place.
@@ -63,7 +70,8 @@ GopFindAdapter(
 	ULONG MapFlags, MapLength;
 	PVOID MapAddress;
 
-	BOOLEAN FrameBufferBlack;
+	UINT32 CurrentPixel;
+	BOOLEAN FrameBufferValid;
 
 	// Do a brute-force loop across all PCI buses,
 	// if a display controller is found then get it's BARs to guess where the framebuffer *might* be located.
@@ -98,6 +106,7 @@ GopFindAdapter(
 					if (IsIo) // we want a memory-mapped framebuffer, which I don't think would ever be in I/O space
 						continue;
 
+					FrameBufferValid = FALSE;
 					// Check if this memory (all of it) is actually mappable.
 					// Just a further check to ensure this really could be the framebuffer:
 					// -----
@@ -108,26 +117,30 @@ GopFindAdapter(
 						continue;
 
 					if (MapLength < GOP_MODE_FRAMEBUFFERSIZE)
-					{
-						VideoPortUnmapMemory(HwDeviceExtension, MapAddress, NULL);
-						continue; // it's not big enough
-					}
+						goto finishScan; // it's not big enough
 					
-					// To be even more sure that this is the framebuffer, read the memory region to check if the top rows are 
-					// all black (because the Starting Windows/Windows is loading files screen is mostly black):
-					FrameBufferBlack = TRUE;
-					for (UINT32 y = 0; y < 128; ++y)
+					// To be even more sure that this is the framebuffer, read the memory region to check if the top rows ONLY 
+					// contain colors that the Windows Boot Manager uses:
+					for (UINT32 y = 0; y < GOP_NUM_ROWS_TO_VERIFY; ++y)
 					{
 						for (UINT32 x = 0; x < GOP_MODE_WIDTH; ++x)
 						{
-							if ((((UINT32*)MapAddress)[x + y * GOP_MODE_WIDTH] & 0xFFFFFF) != 0x000000)
+							CurrentPixel = ((UINT32*)MapAddress)[x + y * GOP_MODE_WIDTH] & 0xFFFFFF;
+							FrameBufferValid = FALSE;
+							for (UINT32 i = 0; i < GOP_BOOTMGR_COLOR_COUNT; ++i)
 							{
-								FrameBufferBlack = FALSE;
-								break;
+								if (CurrentPixel == GOP_BOOTMGR_COLORS[i])
+								{
+									FrameBufferValid = TRUE;
+									break;
+								}
 							}
+							if (!FrameBufferValid)
+								goto finishScan;
 						}
 					}
-					if (!FrameBufferBlack)
+				finishScan:
+					if (!FrameBufferValid)
 					{
 						VideoPortUnmapMemory(HwDeviceExtension, MapAddress, NULL);
 						continue;
