@@ -11,9 +11,9 @@
 
 const UINT32 GOP_BOOTMGR_COLORS[GOP_BOOTMGR_COLOR_COUNT] =
 {
-	0x000000,
-	0xBFBFBF,
-	0xFFFFFF
+	0x000000, // background color, remaining in use even at Starting Windows
+	0xBFBFBF, // the bars at the top/bottom, also the secondary text color
+	0xFFFFFF // primary text color
 };
 
 // Due to GOP limitations this is the only mode we can expose; it's first of all
@@ -106,10 +106,10 @@ GopFindAdapter(
 					if (IsIo) // we want a memory-mapped framebuffer, which I don't think would ever be in I/O space
 						continue;
 
-					FrameBufferValid = FALSE;
 					// Check if this memory (all of it) is actually mappable.
 					// Just a further check to ensure this really could be the framebuffer:
 					// -----
+					FrameBufferValid = FALSE;
 					MapFlags = VIDEO_MEMORY_SPACE_MEMORY;
 					MapLength = GOP_MODE_FRAMEBUFFERSIZE;
 					MapAddress = NULL;
