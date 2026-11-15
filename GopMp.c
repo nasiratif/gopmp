@@ -140,11 +140,9 @@ GopFindAdapter(
 						}
 					}
 				finishScan:
+					VideoPortUnmapMemory(HwDeviceExtension, MapAddress, NULL);
 					if (!FrameBufferValid)
-					{
-						VideoPortUnmapMemory(HwDeviceExtension, MapAddress, NULL);
 						continue;
-					}
 					// -----
 					
 					// Attempt to claim the access range for the framebuffer.

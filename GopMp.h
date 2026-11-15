@@ -1,6 +1,6 @@
 /*
 
-	UEFI GOP Miniport Driver v1.0.2
+	UEFI GOP Miniport Driver v1.0.2.1
 	Written by Nasir "Nassic" W. (@nasiratif on GitHub)
 	(C) 2026
 
