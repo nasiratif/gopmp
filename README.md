@@ -10,7 +10,7 @@ Several projects have been made by others to try & workaround this problem; one 
 
 ## How it works
 
-The driver enumerates through a bunch of PCI buses to locate a suitable display controller and finds a non-IO base address register (BAR) that is mappable within the window of the framebuffer `(1024 * 768 * 4)`. Afterwards this address is assumed to be the on-screen framebuffer and is passed to Windows to direct video output to.
+The driver enumerates through a bunch of PCI buses to locate a suitable display controller and finds a non-IO base address register (BAR) that is mappable within the window of the framebuffer `(1024 * 768 * 4)`. The driver then validates the top 128 rows of the memory region checking if it contains only color data that the Windows Boot Manager would use. Afterwards this address is assumed to be the on-screen framebuffer and is passed to Windows to direct video output to.
 
 Unlike the standard legacy VGA system, where the framebuffer is located at a fixed address (normally `0xA0000`), GOP framebuffers could be mapped anywhere depending on the machine, hence why this sort of approach is necessary.
 
