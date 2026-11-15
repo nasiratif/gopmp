@@ -7,7 +7,7 @@
 	Primarily intended for Windows 7, although it works on Vista as well.
 
 	Modern computers now make use of a new video interface called GOP (Graphics Output Protocol).
-	This was introduced in UEFI 2.0, and is meant to replace the older interface of using VGA BIOS
+	This is UEFI-specific and is meant to replace the older interface of using VGA BIOS
 	interrupts (int 10h) with a more convenient standardized interface to directly access the
 	GPU framebuffer.
 
@@ -52,7 +52,7 @@
 // The first few rows of the found memory region should be checked to verfiy the 
 // possibility of it being the framebuffer.
 // Doing 128 just because better to be safe than sorry :)
-#define GOP_NUM_ROWS_TO_VERIFY 128
+#define GOP_ROWS_TO_VERIFY 128
 #define GOP_BOOTMGR_COLOR_COUNT 3
 // -----
 

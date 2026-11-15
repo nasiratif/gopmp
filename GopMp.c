@@ -121,7 +121,7 @@ GopFindAdapter(
 					
 					// To be even more sure that this is the framebuffer, read the memory region to check if the top rows ONLY 
 					// contain colors that the Windows Boot Manager uses:
-					for (UINT32 y = 0; y < GOP_NUM_ROWS_TO_VERIFY; ++y)
+					for (UINT32 y = 0; y < GOP_ROWS_TO_VERIFY; ++y)
 					{
 						for (UINT32 x = 0; x < GOP_MODE_WIDTH; ++x)
 						{
